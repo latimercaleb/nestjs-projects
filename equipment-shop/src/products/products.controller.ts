@@ -1,5 +1,14 @@
-/* eslint-disable prettier/prettier */
-import {Controller, Get, Header, Body, Post, Param, Put, NotFoundException} from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Header,
+  Body,
+  Post,
+  Param,
+  Put,
+  NotFoundException,
+  Patch
+} from '@nestjs/common'
 import {ProductsService} from './products.service'
 import {Product} from './product.model'
 @Controller('products')
@@ -19,15 +28,29 @@ export class ProductsController {
 
   @Get(':id')
   getProduct(@Param('id') id: string): Product | NotFoundException {
-    // TODO: Test this
     console.log(id)
     return this.productService.getProduct(id)
   }
 
-  @Put()
+  @Put(':id')
   updateProduct(@Param('id') id: string, @Body() productData: Product) {
-        // TODO: Test this
     return this.productService.updateProduct(id, productData)
+    // Note: Put is updating the entire request object, if undefined reset value
+  }
+
+  // TODO
+  // Question why some backedn devs just use post for everything
+  // Do delete, request and response vods then call it for dayon this
+
+  @Patch(':id')
+  patchProduct(@Param('id') id: string, @Body() productData: Product) {
+    return this.productService.patchProduct(id, productData)
+    // Note: Patch is updating the part of the request object sent, if undefined use previous value
+  }
+
+  @Delete(':id')
+  removeProduct(@Param('id') id: string) {
+    return this.productService.cancelProduct(id)
   }
 
   @Post()
