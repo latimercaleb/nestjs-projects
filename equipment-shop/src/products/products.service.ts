@@ -22,9 +22,10 @@ export class ProductsService {
   }
 
   getProduct(productId: string): Product | NotFoundException {
-    // TODO: Find product and return it, if no product return exception
     const foundProduct = this.productStore.find((product) => product.id === productId)
-    return foundProduct ?? new NotFoundException('Product ID unidentified') // Trying this short-circuit flow
+    console.log(foundProduct)
+    if(!foundProduct) throw new NotFoundException('Product ID unidentified')
+    return foundProduct
   }
 
   patchProduct(
@@ -60,6 +61,16 @@ export class ProductsService {
         price: productToUpdate.price ?? 0
       }
       return this.productStore[idxToUpdate]
+    } else {
+      throw new NotFoundException('Invalid ID')
+    }
+  }
+
+  cancelProduct(id: string){
+    const idxToRemove = this.productStore.findIndex((product) => product.id === id)
+     if (idxToRemove >= 0) {
+      this.productStore.splice(idxToRemove, 1)
+      return {message: 'Delete Successful'}
     } else {
       throw new NotFoundException('Invalid ID')
     }

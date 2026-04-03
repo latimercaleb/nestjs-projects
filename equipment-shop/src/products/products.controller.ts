@@ -7,18 +7,34 @@ import {
   Param,
   Put,
   NotFoundException,
-  Patch
+  Patch,
+  Delete,
+  Req,
+  Res
 } from '@nestjs/common'
 import {ProductsService} from './products.service'
 import {Product} from './product.model'
+import type { Request, Response } from 'express'
+
+
 @Controller('products')
 export class ProductsController {
   constructor(private productService: ProductsService) {}
 
+  // TODO migrate these to app controller for review, do this in postman as well
   @Get('sampleTypes')
   @Header('Content-Type', 'text/html')
   test2(): any {
     return {message: 'New data format'} //  Headers practice
+  }
+
+  @Get('reqHeaderExample/:key')
+  test3(@Req() requestProp: Request, @Res() res: Response) { // When using req annotation type should be Request, same with res, using native express
+    // console.log(requestProp) // Object is massive
+    const {key} = requestProp.params;
+    const queryP = requestProp.query;
+    const agent = requestProp.headers['user-agent'] // Extract useful fields from request decorator
+    return res.status(303).send({key, queryP, agent})
   }
 
   @Get()
@@ -37,10 +53,6 @@ export class ProductsController {
     return this.productService.updateProduct(id, productData)
     // Note: Put is updating the entire request object, if undefined reset value
   }
-
-  // TODO
-  // Question why some backedn devs just use post for everything
-  // Do delete, request and response vods then call it for dayon this
 
   @Patch(':id')
   patchProduct(@Param('id') id: string, @Body() productData: Product) {
