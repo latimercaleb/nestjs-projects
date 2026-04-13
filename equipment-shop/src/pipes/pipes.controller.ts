@@ -1,5 +1,6 @@
 import {Body, Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Post, Query, UsePipes, ValidationPipe} from '@nestjs/common'
-import { IsAlphanumeric, IsDate, IsDateString, IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { IsAlphanumeric, IsDate, IsDateString, IsEmail, IsNotEmpty, IsNumber, MinLength } from 'class-validator';
+import { PhoneAuth } from 'src/custom-pipe/phoneNumberAuth';
 
 class AuthDTO {
   @IsNotEmpty()
@@ -16,19 +17,22 @@ class AuthDTO {
 
   @IsDateString()
   dob: Date;
+
+  @IsNotEmpty()
+  @IsNumber()
+  phoneNumber: number
 }
 
 @Controller('pipes')
 export class PipesController {
   @Post('/auth/register')
-  @UsePipes(ValidationPipe)
+  @UsePipes(ValidationPipe, PhoneAuth)
   registerUser(@Body() userData: AuthDTO) {
     return {
       Email: `Registered Email is: ${userData.email}`
     }
   }
 
-  // TODO: Pull pipes into its own controller, write your own service layer for it
   @Get('/:id')
   getId(@Param('id', ParseIntPipe) id): any {
     return {
