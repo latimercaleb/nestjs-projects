@@ -14,52 +14,12 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import { IsEmail,IsAlphanumeric } from 'class-validator'
+import { IsEmail,IsAlphanumeric, IsEmpty, IsNotEmpty, MinLength } from 'class-validator'
 import {AppService} from './app.service'
-class AuthDTO {
-  @IsEmail()
-  email: string;
-  @IsAlphanumeric()
-  password: string;
-}
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  @Post('/auth/register')
-  @UsePipes(ValidationPipe)
-  registerUser(@Body() userData: AuthDTO) {
-    return {
-      Email: `Registered Email is: ${userData.email}`
-    }
-  }
-
-  // TODO: Pull pipes into its own controller, write your own service layer for it
-  @Get('/pipes/:id')
-  getId(@Param('id', ParseIntPipe) id): any {
-    return {
-      message: id
-    }
-  }
-
-  @Get('/decimalPipe/:id')
-  getDecimalId(@Param('id', ParseFloatPipe) id): any {
-    return {
-      message: id
-    }
-  }
-
-  @Get('/booleanPipe/:id')
-  geBooleanId(@Param('id', ParseBoolPipe) id): any {
-    return {
-      message: id
-    }
-  }
-
-  @Get('/arrayPipe') // Notes this requires validation pipe to be imported via pckg json and added to main.ts
-  getArrayId(@Query('num', ParseArrayPipe) nums) {
-    return nums
-  }
 
   @Get('/uuid/:id')
   uuID(@Param('id', new ParseUUIDPipe({version: '4'})) id) {
