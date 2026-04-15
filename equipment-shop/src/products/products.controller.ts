@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Header,
   Body,
   Post,
   Param,
@@ -9,33 +8,13 @@ import {
   NotFoundException,
   Patch,
   Delete,
-  Req,
-  Res
 } from '@nestjs/common'
 import {ProductsService} from './products.service'
 import {Product} from './product.model'
-import type { Request, Response } from 'express'
-
 
 @Controller('products')
 export class ProductsController {
   constructor(private productService: ProductsService) {}
-
-  // TODO migrate these to app controller for review, do this in postman as well
-  @Get('sampleTypes')
-  @Header('Content-Type', 'text/html')
-  test2(): any {
-    return {message: 'New data format'} //  Headers practice
-  }
-
-  @Get('reqHeaderExample/:key')
-  test3(@Req() requestProp: Request, @Res() res: Response) { // When using req annotation type should be Request, same with res, using native express
-    // console.log(requestProp) // Object is massive
-    const {key} = requestProp.params;
-    const queryP = requestProp.query;
-    const agent = requestProp.headers['user-agent'] // Extract useful fields from request decorator
-    return res.status(303).send({key, queryP, agent})
-  }
 
   @Get()
   getProducts(): Product[] {

@@ -5,6 +5,7 @@ import { ProductsController } from './products/products.controller';
 import { ProductsService } from './products/products.service';
 import { PipesController } from './pipes/pipes.controller';
 import { LoggingMiddleware } from './middleware/logging';
+import { TokenMiddleware } from './middleware/tokens';
 
 @Module({
   imports: [],
@@ -14,5 +15,6 @@ import { LoggingMiddleware } from './middleware/logging';
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) { // Mandatory for registering middleware at module level, for global use main.ts and app.use()
     consumer.apply(LoggingMiddleware).forRoutes('*')
+    consumer.apply(TokenMiddleware).forRoutes('/checkToken')
   }
 }

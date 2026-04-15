@@ -12,14 +12,39 @@ import {
   Body,
   Post,
   UsePipes,
-  ValidationPipe
+  ValidationPipe,
+  Header,
+  Req,
+  Res
 } from '@nestjs/common'
 import { IsEmail,IsAlphanumeric, IsEmpty, IsNotEmpty, MinLength } from 'class-validator'
 import {AppService} from './app.service'
+import type { Request, Response } from 'express'
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+  // TODO migrate these to app controller for review, do this in postman as well
+  @Get('sampleTypes')
+  @Header('Content-Type', 'text/html')
+  test2(): any {
+    return {message: 'New data format'} //  Headers practice
+  }
+
+  @Get('reqHeaderExample/:key')
+  test3(@Req() requestProp: Request, @Res() res: Response) { // When using req annotation type should be Request, same with res, using native express
+    // console.log(requestProp) // Object is massive
+    const {key} = requestProp.params;
+    const queryP = requestProp.query;
+    const agent = requestProp.headers['user-agent'] // Extract useful fields from request decorator
+    return res.status(303).send({key, queryP, agent})
+  }
+  
+  @Get('/checkToken')
+  testTokens(@Req() req: Request) {
+    const token = req['token']
+    return {message: 'Loaded if valid token'} // Check token being added via, postman with both correct token, incorrect token, and correct/incorrect route
+  }
 
   @Post()
   createMsg(@Body('message') msg: string){
