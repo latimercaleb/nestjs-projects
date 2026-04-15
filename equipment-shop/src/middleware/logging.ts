@@ -5,5 +5,4 @@ export class LoggingMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
        console.log(`Date of middleware log: ${new Date().toISOString}`)
     }
-   
 }
