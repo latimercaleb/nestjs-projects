@@ -1,26 +1,46 @@
-import {Body, Controller, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseFloatPipe, ParseIntPipe, Post, Query, UsePipes, ValidationPipe} from '@nestjs/common'
-import { IsAlphanumeric, IsDate, IsDateString, IsEmail, IsNotEmpty, IsNumber, MinLength } from 'class-validator';
-import { PhoneAuth } from 'src/pipes/custom-pipe/phoneNumberAuth';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseArrayPipe,
+  ParseBoolPipe,
+  ParseFloatPipe,
+  ParseIntPipe,
+  Post,
+  Query,
+  UsePipes,
+  ValidationPipe
+} from '@nestjs/common'
+import {
+  IsAlphanumeric,
+  IsDateString,
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  MinLength
+} from 'class-validator'
+import {PhoneAuth} from './custom-pipe/phoneNumberAuth'
 
 class AuthDTO {
   @IsNotEmpty()
   @IsEmail()
-  email!: string;
-
+  email!: string
 
   @IsAlphanumeric()
   @IsNotEmpty()
   @MinLength(8, {
-    message: "Custom message for TOO SHORT $constraint1 chars required! Other special vals, $value, $property, $target"
+    message:
+      'Custom message for TOO SHORT $constraint1 chars required! Other special vals, $value, $property, $target'
   })
-  password!: string;
+  password!: string
 
   @IsDateString()
-  dob!: Date;
+  dob!: Date
 
   @IsNotEmpty()
   @IsNumber()
-  phoneNumber!: number;
+  phoneNumber!: number
 }
 
 @Controller('pipes')

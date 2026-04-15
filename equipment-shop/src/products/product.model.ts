@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 export class Product {
     id: string;
     title: string;
