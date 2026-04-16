@@ -7,6 +7,7 @@ import { PipesController } from './pipes/pipes.controller';
 import { LoggingMiddleware } from './middleware/logging';
 import { TokenMiddleware } from './middleware/tokens';
 import { ContentTypeMiddleware } from './middleware/content-type.middleware';
+import { convertMiddleware } from './middleware/conversions';
 
 @Module({
   imports: [],
@@ -18,5 +19,6 @@ export class AppModule implements NestModule{
     consumer.apply(LoggingMiddleware).forRoutes('*')
     consumer.apply(TokenMiddleware).forRoutes('/checkToken')
     consumer.apply(ContentTypeMiddleware).forRoutes('/client')
+    consumer.apply(convertMiddleware).forRoutes('*')
   }
 }

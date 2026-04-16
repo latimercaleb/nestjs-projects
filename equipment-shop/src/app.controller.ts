@@ -39,17 +39,18 @@ export class AppController {
     const agent = requestProp.headers['user-agent'] // Extract useful fields from request decorator
     return res.status(303).send({key, queryP, agent})
   }
-  
+
   @Get('/checkToken')
   testTokens(@Req() req: Request) {
+    console.log('Request controller method hit') // Will not even be called if middleware filters request. Middleware > Pipe > Controller 
     const token = req['token']
     return {message: 'Loaded if valid token'} // Check token being added via, postman with both correct token, incorrect token, and correct/incorrect route
   }
 
-    @Get('/client')
+  @Get('/client')
   contentCheck(@Req() req: Request) {
-    const token = req['token']
-    return {message: 'Client loaded'}
+    const contentType = req.headers['content-type']
+    return {contentType, message: "Content confirmed"} // Check content type being added via, postman with both correct content type, incorrect content type, and correct/incorrect route
   }
 
   @Post()
