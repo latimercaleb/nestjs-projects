@@ -53,6 +53,11 @@ export class AppController {
     return {contentType, message: "Content confirmed"} // Check content type being added via, postman with both correct content type, incorrect content type, and correct/incorrect route
   }
 
+  @Post('/requestDetails')
+  multiMiddleware(@Body() data: any) {
+    return data
+  }
+
   @Post()
   createMsg(@Body('message') msg: string){
     console.log(msg)
