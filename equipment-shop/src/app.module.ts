@@ -4,10 +4,12 @@ import { AppService } from './app.service';
 import { ProductsController } from './products/products.controller';
 import { ProductsService } from './products/products.service';
 import { PipesController } from './pipes/pipes.controller';
-import { LoggingMiddleware } from './middleware/logging';
-import { TokenMiddleware } from './middleware/tokens';
+import { LoggingMiddleware } from './middleware/logging.middleware';
+import { TokenMiddleware } from './middleware/tokens.middleware';
 import { ContentTypeMiddleware } from './middleware/content-type.middleware';
-import { convertMiddleware } from './middleware/conversions';
+import { convertMiddleware } from './middleware/conversions.middleware';
+import { RequestDetailsMiddleware } from './middleware/request-details.middleware';
+import { TimeStampMiddleware } from './middleware/timestamp.middleware';
 
 @Module({
   imports: [],
@@ -19,6 +21,7 @@ export class AppModule implements NestModule{
     consumer.apply(LoggingMiddleware).forRoutes('*')
     consumer.apply(TokenMiddleware).forRoutes('/checkToken')
     consumer.apply(ContentTypeMiddleware).forRoutes('/client')
-    consumer.apply(convertMiddleware).forRoutes('*')
+    consumer.apply(convertMiddleware).exclude('/requestDetails').forRoutes('*') // Exclude specific route from global middleware
+    consumer.apply(RequestDetailsMiddleware, TimeStampMiddleware).forRoutes('/requestDetails')
   }
 }
