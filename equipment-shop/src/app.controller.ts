@@ -46,6 +46,12 @@ export class AppController {
     return {message: 'Loaded if valid token'} // Check token being added via, postman with both correct token, incorrect token, and correct/incorrect route
   }
 
+    @Get('/client')
+  contentCheck(@Req() req: Request) {
+    const token = req['token']
+    return {message: 'Client loaded'}
+  }
+
   @Post()
   createMsg(@Body('message') msg: string){
     console.log(msg)
