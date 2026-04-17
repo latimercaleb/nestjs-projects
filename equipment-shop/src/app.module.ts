@@ -22,7 +22,7 @@ export class AppModule implements NestModule{
     consumer.apply(LoggingMiddleware).forRoutes('*')
     consumer.apply(TokenMiddleware).forRoutes('/checkToken')
     consumer.apply(ContentTypeMiddleware).forRoutes('/client')
-    consumer.apply(convertMiddleware).exclude('/requestDetails').forRoutes('*') // Exclude specific route from global middleware
+    // consumer.apply(convertMiddleware).exclude('/requestDetails').forRoutes('*') // Exclude specific route from global middleware
     consumer.apply(RequestDetailsMiddleware, TimeStampMiddleware).forRoutes('/requestDetails')
   }
 }

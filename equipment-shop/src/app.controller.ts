@@ -15,11 +15,13 @@ import {
   ValidationPipe,
   Header,
   Req,
-  Res
+  Res,
+  UseGuards
 } from '@nestjs/common'
 import { IsEmail,IsAlphanumeric, IsEmpty, IsNotEmpty, MinLength } from 'class-validator'
 import {AppService} from './app.service'
 import type { Request, Response } from 'express'
+import { AuthGuard } from './guards/auth.guard'
 
 @Controller()
 export class AppController {
@@ -55,6 +57,13 @@ export class AppController {
 
   @Post('/requestDetails')
   multiMiddleware(@Body() data: any) {
+    return data
+  }
+
+  @Post('/gen')
+  @UseGuards(AuthGuard) // Note: Can put this on controller level as well 
+  generateGuardResult(@Body() data: any) {
+    console.log('Gen endpoint hit')
     return data
   }
 

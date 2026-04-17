@@ -7,6 +7,6 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     console.log('Guard tapped')
-    return true;
+    return true; // Returning false defaults to a 403 Forbidden response, true allows the request to proceed
   }
 }
