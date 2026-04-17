@@ -10,11 +10,12 @@ import { ContentTypeMiddleware } from './middleware/content-type.middleware';
 import { convertMiddleware } from './middleware/conversions.middleware';
 import { RequestDetailsMiddleware } from './middleware/request-details.middleware';
 import { TimeStampMiddleware } from './middleware/timestamp.middleware';
+import { AuthGuard } from './guards/auth.guard';
 
 @Module({
   imports: [],
   controllers: [AppController, ProductsController, PipesController],
-  providers: [AppService, ProductsService],
+  providers: [AppService, ProductsService, AuthGuard],
 })
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) { // Mandatory for registering middleware at module level, for global use main.ts and app.use()
