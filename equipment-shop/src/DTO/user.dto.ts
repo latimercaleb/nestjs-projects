@@ -1,9 +1,10 @@
 import { IsAlphanumeric, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator"
 
 export class UserDTO {
-    constructor(name: string, password: string) {
+    constructor(name: string, password: string, createdAt: string) {
         this.name = name
         this.password = password
+        this.createdAt = createdAt
     }
     @IsString()
     @IsNotEmpty({message: 'Username is required'})

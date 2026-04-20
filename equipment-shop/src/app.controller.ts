@@ -27,6 +27,7 @@ import { AuthGuard } from './guards/auth.guard'
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  // Note: may need transform pipe here
   @Post()
   createUser(){
     return `User created successfully`
