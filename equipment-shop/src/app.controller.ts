@@ -26,6 +26,17 @@ import { AuthGuard } from './guards/auth.guard'
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+  @Post()
+  createUser(){
+    return `User created successfully`
+  }
+
+  @Get()
+  getAllUser(){
+    return this.appService.getAllUsers()
+  }
+
   // TODO migrate these to app controller for review, do this in postman as well
   @Get('sampleTypes')
   @Header('Content-Type', 'text/html')
