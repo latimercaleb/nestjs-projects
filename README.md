@@ -2,11 +2,11 @@
 Capstone + side projects for nestjs practice
 
 # Main goals
-Controllers
-Request/Response
-Pipes
-Middleware
-Guards
+Controllers (Done)
+Request/Response (Done)
+Pipes (Done)
+Middleware (Done)
+Guards (In prog)
 Interceptors
 DTOs & Database operations
 Capstone
