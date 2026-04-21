@@ -25,6 +25,6 @@ export class AppModule implements NestModule{
     consumer.apply(ContentTypeMiddleware).forRoutes('/client')
     // consumer.apply(convertMiddleware).exclude('/requestDetails').forRoutes('*') // Exclude specific route from global middleware
     consumer.apply(RequestDetailsMiddleware, TimeStampMiddleware).forRoutes('/requestDetails')
-    consumer.apply(UserMiddleware).forRoutes({path: '/', method: RequestMethod.POST}) // Can also apply guards at controller or route level with @UseGuards, but this is how to apply at middleware level
+    consumer.apply(UserMiddleware).forRoutes({path: '/middleware-users', method: RequestMethod.POST}) // Can also apply guards at controller or route level with @UseGuards, but this is how to apply at middleware level
   }
 }

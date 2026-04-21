@@ -9,13 +9,11 @@ export class TokenMiddleware implements NestMiddleware {
   }
 
   use(req: Request, res: Response, next: NextFunction) {
-    console.log('Token Middleware method hit')
     const tkn = req.headers.authorization
-    if (!tkn || !this.isValidToken(tkn)){
-        console.log('Invalid token')
-        return res.status(401).json({message: 'Not Authorized'})
+    if (!tkn || !this.isValidToken(tkn)) {
+      return res.status(401).json({message: 'Not Authorized'})
     }
-    req['token'] = tkn;
+    req['token'] = tkn
     next()
   }
 }

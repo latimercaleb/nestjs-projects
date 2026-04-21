@@ -22,23 +22,22 @@ import { IsEmail,IsAlphanumeric, IsEmpty, IsNotEmpty, MinLength } from 'class-va
 import {AppService} from './app.service'
 import type { Request, Response } from 'express'
 import { AuthGuard } from './guards/auth.guard'
+import { UserDTO } from './DTO/user.dto'
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  // Note: may need transform pipe here
-  @Post()
-  createUser(){
+  @Post('/middleware-users')
+  createUser(@Body() req: UserDTO){
     return `User created successfully`
   }
 
-  @Get()
+  @Get('/middleware-users')
   getAllUser(){
     return this.appService.getAllUsers()
   }
 
-  // TODO migrate these to app controller for review, do this in postman as well
   @Get('sampleTypes')
   @Header('Content-Type', 'text/html')
   test2(): any {
@@ -68,8 +67,12 @@ export class AppController {
   }
 
   @Post('/requestDetails')
-  multiMiddleware(@Body() data: any) {
-    return data
+  multiMiddleware(@Body() data: any, @Req() req: Request) {
+    console.log('In controller method! This never runs since the request/response cycle ends in timestamp middleware')
+    return {
+        data,
+        requestDetails: req['requestDetails'], // This is where the object built out in the middleware would be accessible if I were to call next() in the timestamp middleware, but since I want to end the request/response cycle there to just return the object built out in the middleware, this is not accessible. If I wanted to access it here, I'd have to call next() in the timestamp middleware and then I could access it here with @Req
+    }
   }
 
   @Post('/gen')
