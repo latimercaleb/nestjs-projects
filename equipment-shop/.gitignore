@@ -39,10 +39,8 @@ build/Release
 
 # Dependency directories
 node_modules/
-# equipment-shop/node_modules/
-# equipment-shop/dist/
-# equipment-shop/package-lock.json
-jspm_packages/
+dist/
+package-lock.json
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
