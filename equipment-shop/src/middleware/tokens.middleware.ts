@@ -1,4 +1,4 @@
-import {ArgumentMetadata, BadRequestException, Injectable, NestMiddleware} from '@nestjs/common'
+import {Injectable, NestMiddleware} from '@nestjs/common'
 import {NextFunction, Request, Response} from 'express'
 @Injectable()
 export class TokenMiddleware implements NestMiddleware {

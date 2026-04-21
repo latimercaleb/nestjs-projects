@@ -2,8 +2,7 @@ import {ArgumentMetadata, BadRequestException, Injectable, PipeTransform} from '
 
 @Injectable()
 export class PhoneAuth implements PipeTransform {
-    transform(value: any, metadata: ArgumentMetadata) { 
-        console.log(value)
+    transform(value: any, metadata: ArgumentMetadata) {
         const pN = String(value.phoneNumber)
         const regex = /^\d{10,11}$/
         if(!regex.test(pN)){

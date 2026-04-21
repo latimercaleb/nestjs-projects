@@ -12,39 +12,12 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import {
-  IsAlphanumeric,
-  IsDateString,
-  IsEmail,
-  IsNotEmpty,
-  IsNumber,
-  MinLength
-} from 'class-validator'
 import {PhoneAuth} from './custom-pipe/phoneNumberAuth'
-
-class AuthDTO {
-  @IsNotEmpty()
-  @IsEmail()
-  email!: string
-
-  @IsAlphanumeric()
-  @IsNotEmpty()
-  @MinLength(8, {
-    message:
-      'Custom message for TOO SHORT $constraint1 chars required! Other special vals, $value, $property, $target'
-  })
-  password!: string
-
-  @IsDateString()
-  dob!: Date
-
-  @IsNotEmpty()
-  @IsNumber()
-  phoneNumber!: number
-}
+import { AuthDTO } from './auth.dto'
 
 @Controller('pipes')
 export class PipesController {
+
   @Post('/auth/register')
   @UsePipes(ValidationPipe, PhoneAuth)
   registerUser(@Body() userData: AuthDTO) {
@@ -74,7 +47,7 @@ export class PipesController {
     }
   }
 
-  @Get('/arrayPipe') // Notes this requires validation pipe to be imported via pckg json and added to main.ts
+  @Get('/arrayPipe') // Notes this requires validation pipe to be imported via pkg json and added to main.ts
   getArrayId(@Query('num', ParseArrayPipe) nums) {
     return nums
   }

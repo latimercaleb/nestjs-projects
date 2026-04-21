@@ -15,7 +15,6 @@ export class AppService {
   }
 
   getHello(): string {
-    console.log('heat')
     return 'Hello World!'
   }
 }

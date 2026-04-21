@@ -4,21 +4,14 @@ import {
   Query,
   Param,
   HttpCode,
-  ParseIntPipe,
-  ParseFloatPipe,
-  ParseBoolPipe,
-  ParseArrayPipe,
   ParseUUIDPipe,
   Body,
   Post,
-  UsePipes,
-  ValidationPipe,
   Header,
   Req,
   Res,
   UseGuards
 } from '@nestjs/common'
-import { IsEmail,IsAlphanumeric, IsEmpty, IsNotEmpty, MinLength } from 'class-validator'
 import {AppService} from './app.service'
 import type { Request, Response } from 'express'
 import { AuthGuard } from './guards/auth.guard'
@@ -55,7 +48,7 @@ export class AppController {
 
   @Get('/checkToken')
   testTokens(@Req() req: Request) {
-    console.log('Request controller method hit') // Will not even be called if middleware filters request. Middleware > Pipe > Controller 
+    console.log('Request controller method hit') // Will not even be called if middleware filters request. Middleware > Controller
     const token = req['token']
     return {message: 'Loaded if valid token'} // Check token being added via, postman with both correct token, incorrect token, and correct/incorrect route
   }
@@ -94,7 +87,7 @@ export class AppController {
     return {uuid: id, status: 200}
   }
 
-  @Get(':id')
+  @Get('/id-list/:id')
   @HttpCode(202)
   simpleQueryParam(
     @Param('id') id: number,

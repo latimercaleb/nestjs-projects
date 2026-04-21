@@ -23,20 +23,17 @@ export class ProductsController {
 
   @Get(':id')
   getProduct(@Param('id') id: string): Product | NotFoundException {
-    console.log(id)
     return this.productService.getProduct(id)
   }
 
-  @Put(':id')
+  @Put(':id') // Note: Put is updating the entire request object, if undefined reset value
   updateProduct(@Param('id') id: string, @Body() productData: Product) {
     return this.productService.updateProduct(id, productData)
-    // Note: Put is updating the entire request object, if undefined reset value
   }
 
-  @Patch(':id')
+  @Patch(':id') // Note: Patch is updating the part of the request object sent, if undefined use previous value
   patchProduct(@Param('id') id: string, @Body() productData: Product) {
     return this.productService.patchProduct(id, productData)
-    // Note: Patch is updating the part of the request object sent, if undefined use previous value
   }
 
   @Delete(':id')
