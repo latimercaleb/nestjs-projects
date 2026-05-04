@@ -4,3 +4,8 @@ export interface User {
   id: number
   email: string
 }
+
+export enum Role {
+    USER = 'user',
+    ADMIN =  'admin'
+}
