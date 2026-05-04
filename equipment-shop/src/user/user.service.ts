@@ -61,7 +61,15 @@ export class UserService {
     }
   }
 
+//   addUser(name: string, email: string) : User {
+
+//   }
+
   private getUserById(id: number): User | undefined {
     return this.users.find((x) => x.id == id)
   }
+
+//     private addNewIdAndKey(id: number): {key: string, id: number} {
+//     // Calc out new id and key
+//   }
 }

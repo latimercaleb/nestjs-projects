@@ -1,4 +1,4 @@
-import {Controller, Get, Req, SetMetadata, UseGuards} from '@nestjs/common'
+import {Body, Controller, Get, Post, Req, SetMetadata, UseGuards} from '@nestjs/common'
 import {UserService} from './user.service'
 import {AuthGuard} from '../guards/auth.guard'
 import { RoleGuard } from '../guards/role.guard'
@@ -24,4 +24,11 @@ export class UserController {
     const email = this.userService.getUserEmail(auth)
     return {auth, email}
   }
+// TODO: Expand on this with roles, allow admins & users to do different things via guards
+//   @Post('users')
+//   addUser(@Body() userInfo: any) {
+//     console.log('Test Post')
+//     const {name, email} = userInfo
+//     return this.userService.addUser(name, email)
+//   }
 }
