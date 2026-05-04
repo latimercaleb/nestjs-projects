@@ -75,6 +75,20 @@ export class AppController {
     return data
   }
 
+  @Get('/gen/:username')
+  @UseGuards(AuthGuard) // Note: Can put this on controller level as well 
+  getGuardResult(@Body() data: any, @Query() query: string) {
+    console.log('Gen endpoint hit')
+    return {data, query}
+  }
+  
+  @Get('users')
+  @UseGuards(AuthGuard) // Note: Can put this on controller level as well 
+  getUsersAttempt(@Body() data: any, @Query() query: string) {
+    console.log("Never runs should 401 due to guard setup")
+    return "this is users in the app controller"
+  }
+
   @Post()
   createMsg(@Body('message') msg: string){
     console.log(msg)
