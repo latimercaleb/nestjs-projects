@@ -10,12 +10,14 @@ import {
   Header,
   Req,
   Res,
-  UseGuards
+  UseGuards,
+  UseInterceptors
 } from '@nestjs/common'
 import {AppService} from './app.service'
 import type { Request, Response } from 'express'
 import { AuthGuard } from './guards/auth.guard'
 import { UserDTO } from './DTO/user.dto'
+import { TestInterceptor } from './test/test.interceptor'
 
 @Controller()
 export class AppController {
@@ -35,6 +37,13 @@ export class AppController {
   @Header('Content-Type', 'text/html')
   test2(): any {
     return {message: 'New data format'} //  Headers practice
+  }
+
+  @Get('interceptor')
+  @UseInterceptors(TestInterceptor) // Test of interceptor
+  helloFromIntercept(): any {
+    console.log(1)
+    return {message: 'New data format'}
   }
 
   @Get('reqHeaderExample/:key')
