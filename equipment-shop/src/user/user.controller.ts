@@ -1,6 +1,7 @@
 import {Controller, Get, Req, UseGuards} from '@nestjs/common'
 import {UserService} from './user.service'
 import {AuthGuard} from '../guards/auth.guard'
+import { RoleGuard } from '../guards/role.guard'
 
 @Controller('user')
 export class UserController {
@@ -13,7 +14,7 @@ export class UserController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RoleGuard) // Can use multiple guards
   getAuthorizedUser(@Req() req:any) {
     const auth = req.key
     const email = this.userService.getUserEmail(auth)
