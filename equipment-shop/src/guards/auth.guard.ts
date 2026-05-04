@@ -1,20 +1,24 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { AppController } from '../app.controller';
-import { UserController } from '../user/user.controller';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  constructor(private userService: UserService){}
+
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    console.log('Guard tapped')
     const activeController = context.getClass();
     if(activeController.name !== 'UserController'){
       throw new UnauthorizedException('Inaccessible outside of user controller')
     }
     const [req, res] = context.getArgs();
-    const httpContext = context.switchToHttp().getRequest();
+    const httpContext = context.switchToHttp().getRequest(); // Can switch to http, rpc & websocket contexts to get specific request/response structures in TS
+    const userId = httpContext.params.id
+    const userKey = this.userService.getUserKey(userId)
+    req.key = userKey
+
     console.log(`User agent from http context: ${httpContext.headers['user-agent']}`)
     console.info(`Request query is: `, req.query)
     res.cookie('cookie', 'some_cookie_value') // NOTE: This should not typically be done inside of a guard, interceptors or middleware should handle cookies, guards should only handle auth
